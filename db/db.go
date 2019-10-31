@@ -19,15 +19,15 @@ type User struct {
 	Passwd string
 }
 
-func ConnectDB() {
+func ConnectDB(dbUser, dbPassw *string) {
 	var err error
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	opts := options.Client()
 
 	opts.SetAuth(options.Credential{
-		Username: "root",
-		Password: "root",
+		Username: *dbUser,
+		Password: *dbPassw,
 	})
 
 	if mongoClient, err = mongo.Connect(ctx, opts.ApplyURI(constants.DatabaseAddress)); err != nil {

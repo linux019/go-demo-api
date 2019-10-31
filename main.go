@@ -17,6 +17,8 @@ import (
 
 func main() {
 	port := flag.Int("p", constants.ServerPort, "Server port")
+	dbUser := flag.String("user", constants.DbUser, "Database user")
+	dbPassw := flag.String("password", constants.DbPassw, "Database password")
 	flag.Parse()
 
 	signalChannel := make(chan os.Signal, 1)
@@ -42,7 +44,7 @@ func main() {
 	}()
 
 	api.AddRoutes(router)
-	db.ConnectDB()
+	db.ConnectDB(dbUser, dbPassw)
 	defer db.DisconnectDB()
 
 	<-signalChannel

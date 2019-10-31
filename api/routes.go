@@ -18,7 +18,7 @@ func AddRoutes(router *mux.Router) {
 	}
 
 	router.Use(loggingMiddleware, jsonMiddleware)
-	router.HandleFunc("/create_account", controllers.CreateAccount).Methods("POST")
-	router.HandleFunc("/authenticate", controllers.AuthenticateAccount).Methods("POST")
-	router.HandleFunc("/demo", controllers.Demo).Methods("POST")
+	router.HandleFunc("/create_account", controllers.CreateAccount).Methods(http.MethodPost)
+	router.HandleFunc("/authenticate", controllers.AuthenticateAccount).Methods(http.MethodPost)
+	//router.HandleFunc("/demo", controllers.Demo).Methods(http.MethodPost)
 }
