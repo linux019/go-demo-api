@@ -1,7 +1,5 @@
 # Tasks
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
-
 Create a new Go application that does the following:
 - Runs as a daemon on the command line- Structure the program so that it can be expanded for more routes and become a larger application, even though we're only going to put two routes in it for this test.
 - Uses MongoDB as a database with an accounts collection
