@@ -16,6 +16,10 @@ import (
 )
 
 func main() {
+	if os.Getuid() == 0 {
+		log.Logger.Fatal("Don't run me under root!")
+	}
+
 	port := flag.Int("p", constants.ServerPort, "Server port")
 	dbUser := flag.String("user", constants.DbUser, "Database user")
 	dbPassw := flag.String("password", constants.DbPassw, "Database password")

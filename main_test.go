@@ -2,12 +2,15 @@ package main
 
 import (
 	"api-demo/api/controllers"
+	"api-demo/constants"
 	"bytes"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
+	"flag"
 	"io"
 	"net/http"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -18,8 +21,14 @@ var httpClient http.Client = http.Client{
 	Timeout: time.Second * 5,
 }
 
+var port *int
+
+func init() {
+	port = flag.Int("p", constants.ServerPort, "Server port")
+}
+
 func serverRequest(t *testing.T, method, url string, body io.Reader) *http.Request {
-	if req, err := http.NewRequest(method, serverAddr+url, body); err == nil {
+	if req, err := http.NewRequest(method, serverAddr+":"+strconv.Itoa(*port)+url, body); err == nil {
 		req.Header.Set("Accept", "*/*")
 		req.Header.Set("Content-Type", "application/json")
 		return req
@@ -31,6 +40,8 @@ func serverRequest(t *testing.T, method, url string, body io.Reader) *http.Reque
 }
 
 func TestServer(t *testing.T) {
+	flag.Parse()
+
 	t.Run("Connection test", func(t *testing.T) {
 		req := serverRequest(t, http.MethodHead, "/", nil)
 		if r, err := httpClient.Do(req); err == nil {
